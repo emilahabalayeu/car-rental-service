@@ -1,6 +1,7 @@
-package model;
+package vehicle;
 
 public class Engine {
+
     private int volume;
     private int horsepower;
 

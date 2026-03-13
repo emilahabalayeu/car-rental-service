@@ -1,8 +1,9 @@
-package model;
+package vehicle;
 
 import java.time.LocalDate;
 
 public class Insurance {
+
     private String policyNumber;
     private LocalDate expiryDate;
 

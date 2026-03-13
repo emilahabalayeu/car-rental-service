@@ -1,6 +1,7 @@
-package model;
+package vehicle;
 
 public class Vehicle {
+
     private String type;
     private String brand;
     private boolean isAvailable;

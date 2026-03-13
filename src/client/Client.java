@@ -1,6 +1,7 @@
-package model;
+package client;
 
 public class Client {
+
     private String name;
     private String type;
     private Address address;

@@ -1,6 +1,10 @@
-package model;
+package personnel;
+
+import client.Address;
+import client.ContactInfo;
 
 public class Employee {
+
     private String firstName;
     private String lastName;
     private String position;

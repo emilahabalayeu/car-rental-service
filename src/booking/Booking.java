@@ -1,9 +1,13 @@
-package model;
+package booking;
+
+import client.Client;
+import vehicle.Vehicle;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Booking {
+
     private Client client;
     private Vehicle vehicle;
     private int rentalDays;
@@ -16,13 +20,18 @@ public class Booking {
         this.rentalDays = rentalDays;
     }
 
-    public void confirmBooking(){
-        System.out.println("Booking confirmed!"
-                + "\nClient: " + client.getName()
-                + "\nVehicle: " + vehicle.getBrand()
-                + "\nDays: " + rentalDays
-                + "\nPrice: " + rentalPrice
-                + "\nDate: " + bookingDate);
+    public void confirmBooking() {
+
+        if (vehicle.isAvailable()) {
+            System.out.println("Booking confirmed!"
+                    + "\nClient: " + client.getName()
+                    + "\nVehicle: " + vehicle.getBrand()
+                    + "\nDays: " + rentalDays
+                    + "\nPrice: " + rentalPrice
+                    + "\nDate: " + bookingDate);
+        } else {
+            System.out.println("Vehicle is not available!");
+        }
     }
 
     public void setRentalPrice(BigDecimal rentalPrice) {

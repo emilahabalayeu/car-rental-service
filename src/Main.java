@@ -1,10 +1,19 @@
-import model.*;
+import booking.Booking;
+import client.Address;
+import client.BankDetails;
+import client.Client;
+import client.ContactInfo;
+import personnel.Employee;
+import vehicle.Engine;
+import vehicle.Insurance;
+import vehicle.Vehicle;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
+
         Engine engine1 = new Engine(160, 130);
 
         Address address1 = new Address("Belveder", "Wasrzawa", "Poland");
@@ -34,10 +43,10 @@ public class Main {
         booking1.setRentalPrice(new BigDecimal("500"));
 
         CarRentalCompany carRentalCompany1 = new CarRentalCompany("Pupkin Cars & Ko");
-        carRentalCompany1.setEmployee(employee1);
-        carRentalCompany1.setVehicle(vehicle1);
-        carRentalCompany1.setClient(client1);
-        carRentalCompany1.setBooking(booking1);
+        carRentalCompany1.setEmployees(new Employee[]{employee1});
+        carRentalCompany1.setVehicles(new Vehicle[]{vehicle1});
+        carRentalCompany1.setClients(new Client[]{client1});
+        carRentalCompany1.setBookings(new Booking[]{booking1});
 
         booking1.confirmBooking();
     }

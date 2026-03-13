@@ -1,6 +1,7 @@
-package model;
+package client;
 
 public class BankDetails {
+
     private String bankName;
     private String accountNumber;
 

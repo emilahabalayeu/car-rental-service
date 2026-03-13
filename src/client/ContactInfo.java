@@ -1,6 +1,7 @@
-package model;
+package client;
 
 public class ContactInfo {
+
     private String phone;
     private String email;
 

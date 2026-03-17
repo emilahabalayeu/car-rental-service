@@ -3,6 +3,7 @@ package base;
 import java.math.BigDecimal;
 
 public abstract class BaseBooking {
+
     private int rentalDays;
     private BigDecimal rentalPrice;
 

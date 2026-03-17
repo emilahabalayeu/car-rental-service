@@ -1,6 +1,7 @@
 package base;
 
 public class Document {
+
     private String documentNumber;
 
     public Document(String documentNumber) {

@@ -3,6 +3,7 @@ package base;
 import client.ContactInfo;
 
 public abstract class Person {
+
     protected String firstName;
     protected String lastName;
     private ContactInfo contactInfo;

@@ -4,9 +4,11 @@ import client.BankDetails;
 import client.Client;
 import client.ContactInfo;
 import personnel.Employee;
+import vehicle.Car;
 import vehicle.Engine;
 import vehicle.Insurance;
-import vehicle.Vehicle;
+import base.Vehicle;
+import vehicle.Truck;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ public class Main {
     public static void main(String[] args) {
 
         Engine engine1 = new Engine(160, 130);
+        Engine engine2 = new Engine(750, 900);
 
         Address address1 = new Address("Belveder", "Wasrzawa", "Poland");
 
@@ -24,11 +27,13 @@ public class Main {
 
         Insurance insurance1 = new Insurance("345642", LocalDate.of(2025, 12, 31));
 
-        Vehicle vehicle1 = new Vehicle("Passenger car", "Toyota", engine1);
-        vehicle1.setAvailable(true);
-        vehicle1.setInsurance(insurance1);
+        Car car1 = new Car("Passenger car", "Toyota", engine1);
+        car1.setAvailable(true);
+        car1.setInsurance(insurance1);
 
-        Client client1 = new Client("Ivanov I. I.", "Individual client");
+        Truck truck1 = new Truck("Truck", "Iveco", engine2);
+
+        Client client1 = new Client("Ivan", "Ivanov", "Individual client");
         client1.setAddress(address1);
         client1.setContactInfo(contactInfo1);
         client1.setBankDetails(bankDetails1);
@@ -38,16 +43,19 @@ public class Main {
         employee1.setContactInfo(contactInfo1);
         employee1.setSalary(5000);
 
-        Booking booking1 = new Booking(client1, vehicle1, 7);
+        Booking booking1 = new Booking(client1, car1, 7);
         booking1.setBookingDate(LocalDate.now());
         booking1.setRentalPrice(new BigDecimal("500"));
 
         CarRentalCompany carRentalCompany1 = new CarRentalCompany("Pupkin Cars & Ko");
         carRentalCompany1.setEmployees(new Employee[]{employee1});
-        carRentalCompany1.setVehicles(new Vehicle[]{vehicle1});
+        carRentalCompany1.setVehicles(new Vehicle[]{car1, truck1});
         carRentalCompany1.setClients(new Client[]{client1});
         carRentalCompany1.setBookings(new Booking[]{booking1});
 
         booking1.confirmBooking();
+
+        carRentalCompany1.printVehicleDescription(car1);
+        carRentalCompany1.printVehicleDescription(truck1);
     }
 }

@@ -1,16 +1,43 @@
 package client;
 
-public class Client {
+import base.Person;
 
-    private String name;
+import java.util.Objects;
+
+public class Client extends Person {
+
     private String type;
     private Address address;
     private BankDetails bankDetails;
-    private ContactInfo contactInfo;
 
-    public Client(String name, String type) {
-        this.name = name;
+    public Client(String firstName, String lastName, String type) {
+        super(firstName, lastName);
         this.type = type;
+    }
+
+    public String getRole() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "type='" + type + '\'' +
+                ", address=" + address +
+                ", bankDetails=" + bankDetails +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(type, client.type) && Objects.equals(address, client.address) && Objects.equals(bankDetails, client.bankDetails);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, address, bankDetails);
     }
 
     public void setAddress(Address address) {
@@ -19,14 +46,6 @@ public class Client {
 
     public void setBankDetails(BankDetails bankDetails) {
         this.bankDetails = bankDetails;
-    }
-
-    public void setContactInfo(ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getType() {
@@ -39,9 +58,5 @@ public class Client {
 
     public BankDetails getBankDetails() {
         return bankDetails;
-    }
-
-    public ContactInfo getContactInfo() {
-        return contactInfo;
     }
 }

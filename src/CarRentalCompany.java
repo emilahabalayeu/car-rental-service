@@ -1,7 +1,7 @@
 import booking.Booking;
 import client.Client;
 import personnel.Employee;
-import vehicle.Vehicle;
+import base.Vehicle;
 
 public class CarRentalCompany {
 
@@ -13,6 +13,10 @@ public class CarRentalCompany {
 
     public CarRentalCompany(String name) {
         this.name = name;
+    }
+
+    public void printVehicleDescription(Vehicle vehicle) {
+        System.out.println(vehicle.getDescription());
     }
 
     public void setEmployees(Employee[] employees) {

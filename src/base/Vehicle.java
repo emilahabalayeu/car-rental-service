@@ -1,6 +1,9 @@
-package vehicle;
+package base;
 
-public class Vehicle {
+import vehicle.Engine;
+import vehicle.Insurance;
+
+public abstract class Vehicle {
 
     private String type;
     private String brand;
@@ -13,6 +16,8 @@ public class Vehicle {
         this.brand = brand;
         this.engine = engine;
     }
+
+    public abstract String getDescription();
 
     public void setAvailable(boolean available) {
         isAvailable = available;

@@ -3,21 +3,22 @@ package booking;
 import base.BaseBooking;
 import client.Client;
 import base.Vehicle;
+import interfaces.Payable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class Booking extends BaseBooking {
-
+public class Booking extends BaseBooking implements Payable {
     private Client client;
     private Vehicle vehicle;
     private LocalDate bookingDate;
+    private static int bookingCount = 0;
 
     public Booking(Client client, Vehicle vehicle, int rentalDays) {
         super(rentalDays);
         this.client = client;
         this.vehicle = vehicle;
+        bookingCount++;
     }
 
     public void confirmBooking() {
@@ -43,18 +44,6 @@ public class Booking extends BaseBooking {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Booking booking = (Booking) o;
-        return Objects.equals(client, booking.client) && Objects.equals(vehicle, booking.vehicle) && Objects.equals(bookingDate, booking.bookingDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(client, vehicle, bookingDate);
-    }
-
     public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
@@ -69,5 +58,14 @@ public class Booking extends BaseBooking {
 
     public LocalDate getBookingDate() {
         return bookingDate;
+    }
+
+    public static int getBookingCount() {
+        return bookingCount;
+    }
+
+    @Override
+    public void pay() {
+        System.out.println("Payment of " + getRentalPrice() + " processed for " + client.getFirstName() + " " + client.getLastName());
     }
 }

@@ -8,6 +8,10 @@ public class Document {
         this.documentNumber = documentNumber;
     }
 
+    public final String getDocumentInfo() {
+        return "Document number: " + getDocumentNumber();
+    }
+
     public String getDocumentNumber() {
         return documentNumber;
     }

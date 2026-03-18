@@ -1,9 +1,12 @@
 package base;
 
+import interfaces.Describable;
+import interfaces.Insurable;
+import interfaces.Rentable;
 import vehicle.Engine;
 import vehicle.Insurance;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements Rentable, Insurable, Describable {
 
     private String type;
     private String brand;
@@ -18,6 +21,17 @@ public abstract class Vehicle {
     }
 
     public abstract String getDescription();
+
+    @Override
+    public void rent() {
+        isAvailable = false;
+        System.out.println(getBrand() + " is now rented.");
+    }
+
+    @Override
+    public void insure() {
+        System.out.println(getBrand() + " is now insured.");
+    }
 
     public void setAvailable(boolean available) {
         isAvailable = available;

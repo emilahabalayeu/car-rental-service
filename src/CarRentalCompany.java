@@ -1,11 +1,16 @@
 import booking.Booking;
 import client.Client;
+import interfaces.Payable;
 import personnel.Employee;
 import base.Vehicle;
 
 public class CarRentalCompany {
 
     private String name;
+    public static final int MAX_RENTAL_DAYS = 30;
+    static {
+        System.out.println("CarRentalCompany class loaded. Max rental days: " + MAX_RENTAL_DAYS);
+    }
     private Employee[] employees;
     private Vehicle[] vehicles;
     private Client[] clients;
@@ -17,6 +22,14 @@ public class CarRentalCompany {
 
     public void printVehicleDescription(Vehicle vehicle) {
         System.out.println(vehicle.getDescription());
+    }
+
+    public void processPayment(Payable payable) {
+        payable.pay();
+    }
+
+    public static String getDefaultCompanyName() {
+        return "Car Rental Service";
     }
 
     public void setEmployees(Employee[] employees) {

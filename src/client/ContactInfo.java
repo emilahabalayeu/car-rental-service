@@ -1,6 +1,6 @@
 package client;
 
-public class ContactInfo {
+public final class ContactInfo {
 
     private String phone;
     private String email;

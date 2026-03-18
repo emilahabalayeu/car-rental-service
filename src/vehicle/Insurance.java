@@ -1,23 +1,16 @@
 package vehicle;
 
+import base.Document;
+
 import java.time.LocalDate;
 
-public class Insurance {
+public class Insurance extends Document {
 
-    private String policyNumber;
     private LocalDate expiryDate;
 
     public Insurance(String policyNumber, LocalDate expiryDate) {
-        this.policyNumber = policyNumber;
+        super(policyNumber);
         this.expiryDate = expiryDate;
-    }
-
-    public String getPolicyNumber() {
-        return policyNumber;
-    }
-
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
     }
 
     public LocalDate getExpiryDate() {

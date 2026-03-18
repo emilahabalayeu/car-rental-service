@@ -1,21 +1,22 @@
 package personnel;
 
+import base.Person;
 import client.Address;
 import client.ContactInfo;
 
-public class Employee {
+public class Employee extends Person {
 
-    private String firstName;
-    private String lastName;
     private String position;
     private double salary;
     private Address address;
-    private ContactInfo contactInfo;
 
     public Employee(String firstName, String lastName, String position) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super(firstName, lastName);
         this.position = position;
+    }
+
+    public String getRole() {
+        return position;
     }
 
     public void setSalary(double salary) {
@@ -24,18 +25,6 @@ public class Employee {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public void setContactInfo(ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public String getPosition() {
@@ -49,8 +38,5 @@ public class Employee {
     public Address getAddress() {
         return address;
     }
-
-    public ContactInfo getContactInfo() {
-        return contactInfo;
-    }
 }
+

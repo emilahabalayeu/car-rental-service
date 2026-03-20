@@ -57,5 +57,8 @@ public class Main {
 
         carRentalCompany1.printVehicleDescription(car1);
         carRentalCompany1.printVehicleDescription(truck1);
+
+        carRentalCompany1.processPayment(booking1);
+        carRentalCompany1.processPayment(client1);
     }
 }

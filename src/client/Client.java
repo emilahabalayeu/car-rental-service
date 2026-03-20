@@ -1,10 +1,11 @@
 package client;
 
 import base.Person;
+import interfaces.Payable;
 
 import java.util.Objects;
 
-public class Client extends Person {
+public class Client extends Person implements Payable {
 
     private String type;
     private Address address;
@@ -58,5 +59,10 @@ public class Client extends Person {
 
     public BankDetails getBankDetails() {
         return bankDetails;
+    }
+
+    @Override
+    public void pay() {
+        System.out.println("Client " + firstName + " " + lastName + " is paying deposit.");
     }
 }

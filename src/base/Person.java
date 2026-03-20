@@ -1,8 +1,9 @@
 package base;
 
 import client.ContactInfo;
+import interfaces.Contactable;
 
-public abstract class Person {
+public abstract class Person implements Contactable {
 
     protected String firstName;
     protected String lastName;
@@ -13,6 +14,11 @@ public abstract class Person {
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    @Override
+    public void contact() {
+        System.out.println("Contacting: " + firstName + " " + lastName);
     }
 
     public void setContactInfo(ContactInfo contactInfo) {

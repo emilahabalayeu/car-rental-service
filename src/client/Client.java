@@ -2,7 +2,6 @@ package client;
 
 import base.Person;
 import interfaces.Payable;
-
 import java.util.Objects;
 
 public class Client extends Person implements Payable {

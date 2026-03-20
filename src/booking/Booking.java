@@ -3,12 +3,13 @@ package booking;
 import base.BaseBooking;
 import client.Client;
 import base.Vehicle;
+import interfaces.Payable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Booking extends BaseBooking {
+public class Booking extends BaseBooking implements Payable {
 
     private Client client;
     private Vehicle vehicle;
@@ -32,6 +33,11 @@ public class Booking extends BaseBooking {
         } else {
             System.out.println("Vehicle is not available!");
         }
+    }
+
+    @Override
+    public void pay() {
+        System.out.println("Payment of " + getRentalPrice() + " processed for " + client.getFirstName() + " " + client.getLastName());
     }
 
     @Override

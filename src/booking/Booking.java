@@ -3,6 +3,8 @@ package booking;
 import base.BaseBooking;
 import client.Client;
 import base.Vehicle;
+import exception.InvalidRentalDaysException;
+import exception.PaymentFailedException;
 import interfaces.Payable;
 
 import java.math.BigDecimal;
@@ -17,6 +19,9 @@ public class Booking extends BaseBooking implements Payable {
 
     public Booking(Client client, Vehicle vehicle, int rentalDays) {
         super(rentalDays);
+        if (rentalDays <= 0) {
+            throw new InvalidRentalDaysException("Rental days must be greater than 0!");
+        }
         this.client = client;
         this.vehicle = vehicle;
     }
@@ -37,6 +42,9 @@ public class Booking extends BaseBooking implements Payable {
 
     @Override
     public void pay() {
+        if (getRentalPrice() == null) {
+            throw new PaymentFailedException("Payment failed - rental price is not set!");
+        }
         System.out.println("Payment of " + getRentalPrice() + " processed for " + client.getFirstName() + " " + client.getLastName());
     }
 

@@ -1,5 +1,6 @@
 package base;
 
+import exception.VehicleNotAvailableException;
 import vehicle.Engine;
 import vehicle.Insurance;
 import interfaces.Describable;
@@ -22,6 +23,9 @@ public abstract class Vehicle implements Rentable, Insurable, Describable {
 
     @Override
     public void rent() {
+        if (!isAvailable) {
+            throw new VehicleNotAvailableException("Vehicle " + getBrand() + " is not available!");
+        }
         isAvailable = false;
         System.out.println(getBrand() + " is now rented.");
     }

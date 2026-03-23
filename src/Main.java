@@ -3,13 +3,13 @@ import client.Address;
 import client.BankDetails;
 import client.Client;
 import client.ContactInfo;
+import exception.DatabaseConnectionException;
 import personnel.Employee;
 import vehicle.Car;
 import vehicle.Engine;
 import vehicle.Insurance;
 import base.Vehicle;
 import vehicle.Truck;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -60,5 +60,16 @@ public class Main {
 
         carRentalCompany1.processPayment(booking1);
         carRentalCompany1.processPayment(client1);
+
+        try {
+            carRentalCompany1.connectToDatabase();
+        } catch (DatabaseConnectionException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try (RentalLogger logger = new RentalLogger()) {
+            logger.log("Booking created for " + client1.getFirstName());
+            logger.log("Vehicle rented: " + car1.getBrand());
+        }
     }
 }

@@ -1,5 +1,7 @@
 import booking.Booking;
 import client.Client;
+import exception.ClientNotFoundException;
+import exception.DatabaseConnectionException;
 import personnel.Employee;
 import base.Vehicle;
 import interfaces.Payable;
@@ -32,6 +34,19 @@ public class CarRentalCompany {
 
     public static String getDefaultCompanyName() {
         return "Car Rental Service";
+    }
+
+    public Client findClient(String name) {
+        for (Client client : clients) {
+            if (client.getFirstName().equals(name)) {
+                return client;
+            }
+        }
+        throw new ClientNotFoundException("Client " + name + " not found!");
+    }
+
+    public void connectToDatabase() throws DatabaseConnectionException {
+        throw new DatabaseConnectionException("Cannot connect to database!");
     }
 
     public void setEmployees(Employee[] employees) {

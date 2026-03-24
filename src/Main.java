@@ -67,9 +67,12 @@ public class Main {
             System.out.println("Error: " + e.getMessage());
         }
 
-        try (RentalLogger logger = new RentalLogger()) {
-            logger.log("Booking created for " + client1.getFirstName());
-            logger.log("Vehicle rented: " + car1.getBrand());
+        try {
+            carRentalCompany1.connectToDatabase();
+        } catch (DatabaseConnectionException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.out.println("Database connection attempt finished.");
         }
     }
 }

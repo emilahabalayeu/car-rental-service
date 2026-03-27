@@ -50,10 +50,23 @@ public class Main {
         booking1.setRentalPrice(new BigDecimal("500"));
 
         CarRentalCompany carRentalCompany1 = new CarRentalCompany("Pupkin Cars & Ko");
-        carRentalCompany1.setEmployees(new ArrayList<>(List.of(employee1)));
-        carRentalCompany1.setVehicles(new HashSet<>(Set.of(car1, truck1)));
-        carRentalCompany1.setClients(new ArrayList<>(List.of(client1)));
-        carRentalCompany1.setBookings(new HashMap<>(Map.of("0001", booking1)));
+
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee1);
+        carRentalCompany1.setEmployees(employees);
+
+        Set<Vehicle> vehicles = new HashSet<>();
+        vehicles.add(car1);
+        vehicles.add(truck1);
+        carRentalCompany1.setVehicles(vehicles);
+
+        List<Client> clients = new ArrayList<>();
+        clients.add(client1);
+        carRentalCompany1.setClients(clients);
+
+        Map<String, Booking> bookings = new HashMap<>();
+        bookings.put("0001", booking1);
+        carRentalCompany1.setBookings(bookings);
 
         booking1.confirmBooking();
 

@@ -7,6 +7,8 @@ import interfaces.Describable;
 import interfaces.Insurable;
 import interfaces.Rentable;
 
+import java.util.Objects;
+
 public abstract class Vehicle implements Rentable, Insurable, Describable {
 
     private String type;
@@ -36,6 +38,18 @@ public abstract class Vehicle implements Rentable, Insurable, Describable {
     }
 
     public abstract String getDescription();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return Objects.equals(type, vehicle.type) && Objects.equals(brand, vehicle.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, brand);
+    }
 
     public void setAvailable(boolean available) {
         isAvailable = available;

@@ -10,8 +10,10 @@ import vehicle.Engine;
 import vehicle.Insurance;
 import base.Vehicle;
 import vehicle.Truck;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -48,10 +50,23 @@ public class Main {
         booking1.setRentalPrice(new BigDecimal("500"));
 
         CarRentalCompany carRentalCompany1 = new CarRentalCompany("Pupkin Cars & Ko");
-        carRentalCompany1.setEmployees(new Employee[]{employee1});
-        carRentalCompany1.setVehicles(new Vehicle[]{car1, truck1});
-        carRentalCompany1.setClients(new Client[]{client1});
-        carRentalCompany1.setBookings(new Booking[]{booking1});
+
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee1);
+        carRentalCompany1.setEmployees(employees);
+
+        Set<Vehicle> vehicles = new HashSet<>();
+        vehicles.add(car1);
+        vehicles.add(truck1);
+        carRentalCompany1.setVehicles(vehicles);
+
+        List<Client> clients = new ArrayList<>();
+        clients.add(client1);
+        carRentalCompany1.setClients(clients);
+
+        Map<String, Booking> bookings = new HashMap<>();
+        bookings.put("0001", booking1);
+        carRentalCompany1.setBookings(bookings);
 
         booking1.confirmBooking();
 
@@ -61,11 +76,18 @@ public class Main {
         carRentalCompany1.processPayment(booking1);
         carRentalCompany1.processPayment(client1);
 
-        try {
-            carRentalCompany1.connectToDatabase();
-        } catch (DatabaseConnectionException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+        carRentalCompany1.printAllClients();
+        carRentalCompany1.printAllVehicles();
+        carRentalCompany1.printAllBookings();
+        System.out.println("First client: " + carRentalCompany1.getFirstClient().getFirstName());
+
+        Pair<String, Integer> rentalInfo = new Pair<>("Toyota", 7);
+        System.out.println("Rental info: " + rentalInfo);
+
+        RentalRepository<Client> clientRepository = new RentalRepository<>();
+        clientRepository.add(client1);
+        System.out.println("Repository size: " + clientRepository.size());
+        System.out.println("First in repository: " + clientRepository.get(0).getFirstName());
 
         try {
             carRentalCompany1.connectToDatabase();

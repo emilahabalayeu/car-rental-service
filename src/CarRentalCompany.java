@@ -5,14 +5,21 @@ import exception.DatabaseConnectionException;
 import personnel.Employee;
 import base.Vehicle;
 import interfaces.Payable;
+import java.util.*;
 
 public class CarRentalCompany {
 
     private String name;
-    private Employee[] employees;
-    private Vehicle[] vehicles;
-    private Client[] clients;
-    private Booking[] bookings;
+    private List<Employee> employees = new ArrayList<>();
+    private Set<Vehicle> vehicles = new HashSet<>();
+    private List<Client> clients = new ArrayList<>();
+    private Map<String, Booking> bookings = new HashMap<>();
+
+    public static final int MAX_RENTAL_DAYS = 30;
+
+    static {
+        System.out.println("CarRentalCompany class loaded. Max rental days: " + MAX_RENTAL_DAYS);
+    }
 
     public CarRentalCompany(String name) {
         this.name = name;
@@ -20,12 +27,6 @@ public class CarRentalCompany {
 
     public void printVehicleDescription(Vehicle vehicle) {
         System.out.println(vehicle.getDescription());
-    }
-
-    public static final int MAX_RENTAL_DAYS = 30;
-
-    static {
-        System.out.println("CarRentalCompany class loaded. Max rental days: " + MAX_RENTAL_DAYS);
     }
 
     public void processPayment(Payable payable) {
@@ -49,19 +50,55 @@ public class CarRentalCompany {
         throw new DatabaseConnectionException("Cannot connect to database!");
     }
 
-    public void setEmployees(Employee[] employees) {
+    public void addClient(Client client) {
+        clients.add(client);
+        System.out.println("Client added: " + client.getFirstName());
+    }
+
+    public void removeClient(Client client) {
+        clients.remove(client);
+        System.out.println("Client removed: " + client.getFirstName());
+    }
+
+    public void printAllClients() {
+        System.out.println("Total clients: " + clients.size());
+        for (Client client : clients) {
+            System.out.println("- " + client.getFirstName() + " " + client.getLastName());
+        }
+    }
+
+    public Client getFirstClient() {
+        if (clients.isEmpty()) {
+            throw new ClientNotFoundException("No clients found!");
+        }
+        return clients.get(0);
+    }
+
+    public void printAllVehicles() {
+        for (Vehicle vehicle : vehicles) {
+            System.out.println("- " + vehicle.getBrand());
+        }
+    }
+
+    public void printAllBookings() {
+        for (Map.Entry<String, Booking> entry : bookings.entrySet()) {
+            System.out.println("Booking code: " + entry.getKey() + ", client: " + entry.getValue().getClient().getFirstName());
+        }
+    }
+
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 
-    public void setVehicles(Vehicle[] vehicles) {
+    public void setVehicles(Set<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
-    public void setClients(Client[] clients) {
+    public void setClients(List<Client> clients) {
         this.clients = clients;
     }
 
-    public void setBookings(Booking[] bookings) {
+    public void setBookings(Map<String, Booking> bookings) {
         this.bookings = bookings;
     }
 
@@ -69,19 +106,19 @@ public class CarRentalCompany {
         return name;
     }
 
-    public Employee[] getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public Vehicle[] getVehicles() {
+    public Set<Vehicle> getVehicles() {
         return vehicles;
     }
 
-    public Client[] getClients() {
+    public List<Client> getClients() {
         return clients;
     }
 
-    public Booking[] getBookings() {
+    public Map<String, Booking> getBookings() {
         return bookings;
     }
 }

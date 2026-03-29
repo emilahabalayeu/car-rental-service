@@ -3,7 +3,13 @@ import client.Address;
 import client.BankDetails;
 import client.Client;
 import client.ContactInfo;
+import enums.BookingStatus;
+import enums.PaymentStatus;
+import enums.VehicleType;
 import exception.DatabaseConnectionException;
+import interfaces.BookingFormatter;
+import interfaces.PriceCalculator;
+import interfaces.RentalValidator;
 import personnel.Employee;
 import vehicle.Car;
 import vehicle.Engine;
@@ -14,6 +20,7 @@ import vehicle.Truck;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,11 +36,11 @@ public class Main {
 
         Insurance insurance1 = new Insurance("345642", LocalDate.of(2025, 12, 31));
 
-        Car car1 = new Car("Passenger car", "Toyota", engine1);
+        Car car1 = new Car("Passenger car", "Toyota", engine1, VehicleType.CAR);
         car1.setAvailable(true);
         car1.setInsurance(insurance1);
 
-        Truck truck1 = new Truck("Truck", "Iveco", engine2);
+        Truck truck1 = new Truck("Truck", "Iveco", engine2, VehicleType.TRUCK);
 
         Client client1 = new Client("Ivan", "Ivanov", "Individual client");
         client1.setAddress(address1);
@@ -45,7 +52,7 @@ public class Main {
         employee1.setContactInfo(contactInfo1);
         employee1.setSalary(5000);
 
-        Booking booking1 = new Booking(client1, car1, 7);
+        Booking booking1 = new Booking(client1, car1, 7, BookingStatus.CONFIRMED, PaymentStatus.UNPAID);
         booking1.setBookingDate(LocalDate.now());
         booking1.setRentalPrice(new BigDecimal("500"));
 
@@ -88,6 +95,41 @@ public class Main {
         clientRepository.add(client1);
         System.out.println("Repository size: " + clientRepository.size());
         System.out.println("First in repository: " + clientRepository.get(0).getFirstName());
+
+        BookingRecord bookingRecord = new BookingRecord(
+                client1.getFirstName() + " " + client1.getLastName(),
+                car1.getBrand(),
+                7,
+                BookingStatus.CONFIRMED.getDisplayName()
+        );
+        System.out.println("Booking record: " + bookingRecord);
+
+        // 3 кастомных лямбды
+        RentalValidator<Vehicle> isAvailableValidator = vehicle -> vehicle.isAvailable();
+        System.out.println("Is car available: " + isAvailableValidator.validate(car1));
+
+        PriceCalculator calculator = (days, pricePerDay) -> days * pricePerDay;
+        System.out.println("Total price: " + calculator.calculate(7, 100.0));
+
+        BookingFormatter formatter = (clientName, vehicleBrand, days) ->
+                "Booking: " + clientName + " rented " + vehicleBrand + " for " + days + " days";
+        System.out.println(formatter.format("Ivan Ivanov", "Toyota", 7));
+
+// 5 лямбд из java.util.function
+        Predicate<Vehicle> hasInsurance = vehicle -> vehicle.getInsurance() != null;
+        System.out.println("Car has insurance: " + hasInsurance.test(car1));
+
+        Function<Client, String> getFullName = client -> client.getFirstName() + " " + client.getLastName();
+        System.out.println("Full name: " + getFullName.apply(client1));
+
+        Consumer<Booking> printBooking = booking -> System.out.println("Booking for: " + booking.getClient().getFirstName());
+        printBooking.accept(booking1);
+
+        Supplier<String> defaultCompanyName = () -> CarRentalCompany.getDefaultCompanyName();
+        System.out.println("Default company: " + defaultCompanyName.get());
+
+        BiFunction<Integer, Double, Double> totalPrice = (days, price) -> days * price;
+        System.out.println("Calculated price: " + totalPrice.apply(7, 100.0));
 
         try {
             carRentalCompany1.connectToDatabase();

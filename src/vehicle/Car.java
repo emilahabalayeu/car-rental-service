@@ -1,11 +1,12 @@
 package vehicle;
 
 import base.Vehicle;
+import enums.VehicleType;
 
 public class Car extends Vehicle {
 
-    public Car(String type, String brand, Engine engine) {
-        super(type, brand, engine);
+    public Car(String type, String brand, Engine engine, VehicleType vehicleType) {
+        super(type, brand, engine, vehicleType);
     }
 
     @Override

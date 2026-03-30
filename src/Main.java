@@ -115,7 +115,7 @@ public class Main {
                 "Booking: " + clientName + " rented " + vehicleBrand + " for " + days + " days";
         System.out.println(formatter.format("Ivan Ivanov", "Toyota", 7));
 
-// 5 лямбд из java.util.function
+        // 5 лямбд из java.util.function
         Predicate<Vehicle> hasInsurance = vehicle -> vehicle.getInsurance() != null;
         System.out.println("Car has insurance: " + hasInsurance.test(car1));
 
@@ -130,6 +130,14 @@ public class Main {
 
         BiFunction<Integer, Double, Double> totalPrice = (days, price) -> days * price;
         System.out.println("Calculated price: " + totalPrice.apply(7, 100.0));
+
+        // использование filterVehicles с лямбдой
+        List<Vehicle> availableVehicles = carRentalCompany1.filterVehicles(vehicle -> vehicle.isAvailable());
+        System.out.println("Available vehicles: " + availableVehicles.size());
+
+        // Runnable
+        Runnable printCompanyInfo = () -> System.out.println("Company: " + carRentalCompany1.getName());
+        printCompanyInfo.run();
 
         try {
             carRentalCompany1.connectToDatabase();

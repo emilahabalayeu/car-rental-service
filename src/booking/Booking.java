@@ -3,6 +3,8 @@ package booking;
 import base.BaseBooking;
 import client.Client;
 import base.Vehicle;
+import enums.BookingStatus;
+import enums.PaymentStatus;
 import exception.InvalidRentalDaysException;
 import exception.PaymentFailedException;
 import interfaces.Payable;
@@ -16,14 +18,18 @@ public class Booking extends BaseBooking implements Payable {
     private Client client;
     private Vehicle vehicle;
     private LocalDate bookingDate;
+    private BookingStatus bookingStatus;
+    private PaymentStatus paymentStatus;
 
-    public Booking(Client client, Vehicle vehicle, int rentalDays) {
+    public Booking(Client client, Vehicle vehicle, int rentalDays, BookingStatus bookingStatus,  PaymentStatus paymentStatus) {
         super(rentalDays);
         if (rentalDays <= 0) {
             throw new InvalidRentalDaysException("Rental days must be greater than 0!");
         }
         this.client = client;
         this.vehicle = vehicle;
+        this.bookingStatus = bookingStatus;
+        this.paymentStatus = paymentStatus;
     }
 
     public void confirmBooking() {
@@ -83,5 +89,21 @@ public class Booking extends BaseBooking implements Payable {
 
     public LocalDate getBookingDate() {
         return bookingDate;
+    }
+
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

@@ -6,6 +6,7 @@ import personnel.Employee;
 import base.Vehicle;
 import interfaces.Payable;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class CarRentalCompany {
 
@@ -84,6 +85,16 @@ public class CarRentalCompany {
         for (Map.Entry<String, Booking> entry : bookings.entrySet()) {
             System.out.println("Booking code: " + entry.getKey() + ", client: " + entry.getValue().getClient().getFirstName());
         }
+    }
+
+    public List<Vehicle> filterVehicles(Predicate<Vehicle> predicate) {
+        List<Vehicle> result = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (predicate.test(vehicle)) {
+                result.add(vehicle);
+            }
+        }
+        return result;
     }
 
     public void setEmployees(List<Employee> employees) {

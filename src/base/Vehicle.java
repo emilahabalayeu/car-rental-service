@@ -1,12 +1,12 @@
 package base;
 
+import enums.VehicleType;
 import exception.VehicleNotAvailableException;
 import vehicle.Engine;
 import vehicle.Insurance;
 import interfaces.Describable;
 import interfaces.Insurable;
 import interfaces.Rentable;
-
 import java.util.Objects;
 
 public abstract class Vehicle implements Rentable, Insurable, Describable {
@@ -16,11 +16,13 @@ public abstract class Vehicle implements Rentable, Insurable, Describable {
     private boolean isAvailable;
     private Engine engine;
     private Insurance insurance;
+    private VehicleType vehicleType;
 
-    public Vehicle(String type, String brand, Engine engine) {
+    public Vehicle(String type, String brand, Engine engine, VehicleType vehicleType) {
         this.type = type;
         this.brand = brand;
         this.engine = engine;
+        this.vehicleType = vehicleType;
     }
 
     @Override
@@ -66,6 +68,8 @@ public abstract class Vehicle implements Rentable, Insurable, Describable {
     public String getBrand() {
         return brand;
     }
+
+    public VehicleType getVehicleType() { return vehicleType; }
 
     public boolean isAvailable() {
         return isAvailable;

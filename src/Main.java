@@ -135,9 +135,25 @@ public class Main {
         List<Vehicle> availableVehicles = carRentalCompany1.filterVehicles(vehicle -> vehicle.isAvailable());
         System.out.println("Available vehicles: " + availableVehicles.size());
 
+        // stream 6 - map + collect
+        List<String> vehicleBrands = carRentalCompany1.getVehicles().stream()
+                .map(Vehicle::getBrand)
+                .collect(java.util.stream.Collectors.toList());
+        System.out.println("Vehicle brands: " + vehicleBrands);
+
+        // stream 7 - count
+        long availableCount = carRentalCompany1.getVehicles().stream()
+                .filter(Vehicle::isAvailable)
+                .count();
+        System.out.println("Available vehicles count: " + availableCount);
+
         // Runnable
         Runnable printCompanyInfo = () -> System.out.println("Company: " + carRentalCompany1.getName());
         printCompanyInfo.run();
+
+        ReflectionService reflectionService = new ReflectionService();
+        reflectionService.printClassInfo(Booking.class);
+        reflectionService.createObjectAndCallMethod();
 
         try {
             carRentalCompany1.connectToDatabase();

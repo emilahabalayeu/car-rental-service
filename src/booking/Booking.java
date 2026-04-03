@@ -12,7 +12,9 @@ import interfaces.Payable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import annotations.RentalInfo;
 
+@RentalInfo(description = "Main booking class", author = "Emil")
 public class Booking extends BaseBooking implements Payable {
 
     private Client client;

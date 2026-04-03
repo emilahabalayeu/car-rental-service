@@ -39,12 +39,10 @@ public class CarRentalCompany {
     }
 
     public Client findClient(String name) {
-        for (Client client : clients) {
-            if (client.getFirstName().equals(name)) {
-                return client;
-            }
-        }
-        throw new ClientNotFoundException("Client " + name + " not found!");
+        return clients.stream()
+                .filter(client -> client.getFirstName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new ClientNotFoundException("Client " + name + " not found!"));
     }
 
     public void connectToDatabase() throws DatabaseConnectionException {
@@ -63,9 +61,8 @@ public class CarRentalCompany {
 
     public void printAllClients() {
         System.out.println("Total clients: " + clients.size());
-        for (Client client : clients) {
-            System.out.println("- " + client.getFirstName() + " " + client.getLastName());
-        }
+        clients.stream()
+                .forEach(client -> System.out.println("- " + client.getFirstName() + " " + client.getLastName()));
     }
 
     public Client getFirstClient() {
@@ -76,25 +73,19 @@ public class CarRentalCompany {
     }
 
     public void printAllVehicles() {
-        for (Vehicle vehicle : vehicles) {
-            System.out.println("- " + vehicle.getBrand());
-        }
+        vehicles.stream()
+                .forEach(vehicle -> System.out.println("- " + vehicle.getBrand()));
     }
 
     public void printAllBookings() {
-        for (Map.Entry<String, Booking> entry : bookings.entrySet()) {
-            System.out.println("Booking code: " + entry.getKey() + ", client: " + entry.getValue().getClient().getFirstName());
-        }
+        bookings.entrySet().stream()
+                .forEach(entry -> System.out.println("Booking code: " + entry.getKey() + ", client: " + entry.getValue().getClient().getFirstName()));
     }
 
     public List<Vehicle> filterVehicles(Predicate<Vehicle> predicate) {
-        List<Vehicle> result = new ArrayList<>();
-        for (Vehicle vehicle : vehicles) {
-            if (predicate.test(vehicle)) {
-                result.add(vehicle);
-            }
-        }
-        return result;
+        return vehicles.stream()
+                .filter(predicate)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public void setEmployees(List<Employee> employees) {
